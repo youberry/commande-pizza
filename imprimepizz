@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bon de commande - Pizzas</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .commande { margin-top: 20px; border: 1px solid #000; padding: 10px; width: 300px; }
+    </style>
+</head>
+<body>
+    <h2>Créer un bon de commande</h2>
+    <label for="pizza">Type de pizza :</label>
+    <select id="pizza">
+        <option value="Oriental">Oriental</option>
+        <option value="4 Fromages">4 Fromages</option>
+        <option value="Margarita">Margarita</option>
+        <option value="Mexicaine">Mexicaine</option>
+    </select>
+    <label for="quantite">Quantité :</label>
+    <input type="number" id="quantite" min="1" value="1">
+    <button onclick="ajouterPizza()">Ajouter</button>
+    
+    <div class="commande" id="commande"></div>
+    <button onclick="imprimerCommande()">Imprimer</button>
+    
+    <script>
+        let commandes = [];
+        
+        function ajouterPizza() {
+            let pizza = document.getElementById("pizza").value;
+            let quantite = document.getElementById("quantite").value;
+            commandes.push({ pizza, quantite });
+            afficherCommande();
+        }
+        
+        function afficherCommande() {
+            let commandeDiv = document.getElementById("commande");
+            commandeDiv.innerHTML = "<h3>Commande :</h3>";
+            commandes.forEach((cmd, index) => {
+                commandeDiv.innerHTML += `<p>${cmd.quantite} x ${cmd.pizza}</p>`;
+            });
+        }
+        
+        function imprimerCommande() {
+            let contenu = document.getElementById("commande").innerHTML;
+            let printWindow = window.open('', '', 'width=300,height=300');
+            printWindow.document.write('<html><head><title>Bon de commande</title></head><body>');
+            printWindow.document.write(contenu);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        }
+    </script>
+</body>
+</html>
